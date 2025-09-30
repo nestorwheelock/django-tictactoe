@@ -1,0 +1,60 @@
+{% extends "tictactoe/base.html" %}
+
+{% block title %}Games | Tic-Tac-Toe{% endblock %}
+
+{% block content %}
+<div class="game-list">
+    <div class="list-header">
+        <h2>All Games</h2>
+        <button id="new-game-btn" class="btn btn-primary">New Game</button>
+    </div>
+
+    {% if games %}
+    <table class="games-table">
+        <thead>
+            <tr>
+                <th>Game ID</th>
+                <th>Status</th>
+                <th>Current Player</th>
+                <th>Created</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for game in games %}
+            <tr>
+                <td>#{{ game.id }}</td>
+                <td>
+                    <span class="status status-{{ game.status }}">
+                        {{ game.get_status_display }}
+                    </span>
+                </td>
+                <td>{{ game.current_player }}</td>
+                <td>{{ game.created_at|date:"Y-m-d H:i" }}</td>
+                <td>
+                    <a href="{% url 'tictactoe:game-detail' game.id %}" class="btn btn-small">
+                        Play
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p class="no-games">No games yet. Create your first game!</p>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+{% load static %}
+<script src="{% static 'tictactoe/game.js' %}"></script>
+<script>
+    document.getElementById('new-game-btn').addEventListener('click', async () => {
+        const gameId = await TicTacToe.createGame();
+        if (gameId) {
+            window.location.href = `/tictactoe/game/${gameId}/`;
+        }
+    });
+</script>
+{% endblock %}

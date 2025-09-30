@@ -2,8 +2,21 @@ from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.core.exceptions import ValidationError as DjangoValidationError
+from django.shortcuts import render, get_object_or_404
 from .models import Game
 from .serializers import GameSerializer, MoveSerializer, GameDetailSerializer
+
+
+def game_list(request):
+    """Display list of all games."""
+    games = Game.objects.all()
+    return render(request, 'tictactoe/game_list.html', {'games': games})
+
+
+def game_detail(request, pk):
+    """Display single game for playing."""
+    game = get_object_or_404(Game, pk=pk)
+    return render(request, 'tictactoe/game_detail.html', {'game': game})
 
 
 class GameViewSet(viewsets.ModelViewSet):

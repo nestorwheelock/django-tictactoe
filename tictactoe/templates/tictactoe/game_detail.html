@@ -1,0 +1,53 @@
+{% extends "tictactoe/base.html" %}
+{% load static %}
+
+{% block title %}Game #{{ game.id }} | Tic-Tac-Toe{% endblock %}
+
+{% block content %}
+<div class="game-container">
+    <div class="game-header">
+        <a href="{% url 'tictactoe:game-list' %}" class="btn btn-secondary">← Back to Games</a>
+        <h2>Game #{{ game.id }}</h2>
+    </div>
+
+    <div class="game-info">
+        <div class="info-item">
+            <span class="label">Current Player:</span>
+            <span id="current-player" class="value player-{{ game.current_player }}">
+                {{ game.current_player }}
+            </span>
+        </div>
+        <div class="info-item">
+            <span class="label">Status:</span>
+            <span id="game-status" class="value status-{{ game.status }}">
+                {{ game.get_status_display }}
+            </span>
+        </div>
+    </div>
+
+    <div id="game-board" class="board" data-game-id="{{ game.id }}">
+        {% for cell in game.board %}
+        <div class="cell" data-position="{{ forloop.counter0 }}">
+            {% if cell %}
+            <span class="mark mark-{{ cell }}">{{ cell }}</span>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="game-actions">
+        <button id="new-game-btn" class="btn btn-primary">New Game</button>
+        <button id="refresh-btn" class="btn btn-secondary">Refresh</button>
+    </div>
+
+    <div id="message" class="message"></div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'tictactoe/game.js' %}"></script>
+<script>
+    const gameId = {{ game.id }};
+    TicTacToe.initGame(gameId);
+</script>
+{% endblock %}
