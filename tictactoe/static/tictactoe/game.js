@@ -2,20 +2,39 @@ const TicTacToe = {
     apiBaseUrl: '/tictactoe/api',
     currentGameId: null,
 
+    getCsrfToken() {
+        const cookies = document.cookie.split(';');
+        for (let cookie of cookies) {
+            const [name, value] = cookie.trim().split('=');
+            if (name === 'csrftoken') {
+                return value;
+            }
+        }
+        return null;
+    },
+
     async createGame() {
         try {
+            const csrfToken = this.getCsrfToken();
+            const headers = {
+                'Content-Type': 'application/json',
+            };
+
+            if (csrfToken) {
+                headers['X-CSRFToken'] = csrfToken;
+            }
+
             const response = await fetch(`${this.apiBaseUrl}/games/`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: headers,
             });
 
             if (response.ok) {
                 const data = await response.json();
                 return data.id;
             } else {
-                this.showError('Failed to create game');
+                const errorData = await response.json().catch(() => ({}));
+                this.showError(errorData.detail || 'Failed to create game');
                 return null;
             }
         } catch (error) {
@@ -44,11 +63,18 @@ const TicTacToe = {
 
     async makeMove(gameId, position) {
         try {
+            const csrfToken = this.getCsrfToken();
+            const headers = {
+                'Content-Type': 'application/json',
+            };
+
+            if (csrfToken) {
+                headers['X-CSRFToken'] = csrfToken;
+            }
+
             const response = await fetch(`${this.apiBaseUrl}/games/${gameId}/move/`, {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: headers,
                 body: JSON.stringify({ position }),
             });
 
