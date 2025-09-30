@@ -43,6 +43,8 @@
     {% else %}
     <p class="no-games">No games yet. Create your first game!</p>
     {% endif %}
+
+    <div id="message" class="message"></div>
 </div>
 {% endblock %}
 
@@ -50,10 +52,22 @@
 {% load static %}
 <script src="{% static 'tictactoe/game.js' %}"></script>
 <script>
-    document.getElementById('new-game-btn').addEventListener('click', async () => {
-        const gameId = await TicTacToe.createGame();
-        if (gameId) {
-            window.location.href = `/tictactoe/game/${gameId}/`;
+    document.addEventListener('DOMContentLoaded', function() {
+        const newGameBtn = document.getElementById('new-game-btn');
+        if (newGameBtn) {
+            newGameBtn.addEventListener('click', async () => {
+                try {
+                    const gameId = await TicTacToe.createGame();
+                    if (gameId) {
+                        window.location.href = `/tictactoe/game/${gameId}/`;
+                    }
+                } catch (error) {
+                    console.error('Error creating game:', error);
+                    TicTacToe.showError('Failed to create game: ' + error.message);
+                }
+            });
+        } else {
+            console.error('New game button not found');
         }
     });
 </script>
