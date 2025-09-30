@@ -47,6 +47,9 @@
 {% block extra_js %}
 <script src="{% static 'tictactoe/game.js' %}"></script>
 <script>
+    // Set CSRF token for TicTacToe object
+    TicTacToe.csrfToken = '{{ csrf_token }}';
+
     const gameId = {{ game.id }};
     TicTacToe.initGame(gameId);
 </script>

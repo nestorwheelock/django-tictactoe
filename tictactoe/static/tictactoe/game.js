@@ -1,27 +1,16 @@
 const TicTacToe = {
     apiBaseUrl: '/tictactoe/api',
     currentGameId: null,
-
-    getCsrfToken() {
-        const cookies = document.cookie.split(';');
-        for (let cookie of cookies) {
-            const [name, value] = cookie.trim().split('=');
-            if (name === 'csrftoken') {
-                return value;
-            }
-        }
-        return null;
-    },
+    csrfToken: null,  // Will be set by template
 
     async createGame() {
         try {
-            const csrfToken = this.getCsrfToken();
             const headers = {
                 'Content-Type': 'application/json',
             };
 
-            if (csrfToken) {
-                headers['X-CSRFToken'] = csrfToken;
+            if (this.csrfToken) {
+                headers['X-CSRFToken'] = this.csrfToken;
             }
 
             const response = await fetch(`${this.apiBaseUrl}/games/`, {
@@ -63,13 +52,12 @@ const TicTacToe = {
 
     async makeMove(gameId, position) {
         try {
-            const csrfToken = this.getCsrfToken();
             const headers = {
                 'Content-Type': 'application/json',
             };
 
-            if (csrfToken) {
-                headers['X-CSRFToken'] = csrfToken;
+            if (this.csrfToken) {
+                headers['X-CSRFToken'] = this.csrfToken;
             }
 
             const response = await fetch(`${this.apiBaseUrl}/games/${gameId}/move/`, {

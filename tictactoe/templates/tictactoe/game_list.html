@@ -52,6 +52,9 @@
 {% load static %}
 <script src="{% static 'tictactoe/game.js' %}"></script>
 <script>
+    // Set CSRF token for TicTacToe object
+    TicTacToe.csrfToken = '{{ csrf_token }}';
+
     document.addEventListener('DOMContentLoaded', function() {
         const newGameBtn = document.getElementById('new-game-btn');
         if (newGameBtn) {
