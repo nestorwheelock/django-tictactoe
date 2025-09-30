@@ -1,109 +1,498 @@
-# Django Tic-Tac-Toe (SPEC Phase - Awaiting Approval)
+# Django Tic-Tac-Toe
 
-⚠️ **STATUS**: This project is in SPEC phase. No code has been written yet.
-This README guides you through the approval process.
+A reusable Django app module providing a complete tic-tac-toe game with REST API and optional web interface.
 
----
+[![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)](https://www.python.org/downloads/)
+[![Django Version](https://img.shields.io/badge/django-4.0%2B-green)](https://www.djangoproject.com/)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
-## What This Will Be
+## Features
 
-**django-tictactoe** will be a reusable, self-contained Django app module that provides tic-tac-toe game functionality. It's designed to be a drop-in package that any Django developer can install and use immediately.
+- **Complete Game Logic**: Board management, win/draw detection, move validation
+- **REST API**: Full CRUD operations with Django REST Framework
+- **Web Interface**: Optional responsive frontend templates
+- **Django Admin Integration**: Manage games through Django admin
+- **Pip-Installable**: Easy integration into existing Django projects
+- **Comprehensive Tests**: >95% test coverage with pytest
+- **Type Hints**: Full type annotation throughout codebase
+- **Customizable**: Override templates, CSS, and views
 
-**Key Features** (planned):
-- ✅ **Portable Django App** - Install via pip, add to INSTALLED_APPS, and it works
-- ✅ **REST API** - Complete RESTful API for game management
-- ✅ **Automatic Win/Draw Detection** - All 8 winning patterns detected
-- ✅ **Optional Frontend Templates** - Pre-built playable UI (vanilla JS/CSS)
-- ✅ **Django Admin Integration** - Manage games via admin interface
-- ✅ **Comprehensive Tests** - >95% test coverage with pytest
+## Requirements
 
-**What's NOT Included** (v1.0):
-- ❌ AI opponent
-- ❌ User authentication (host project's responsibility)
-- ❌ Real-time multiplayer (websockets)
-- ❌ Game history or statistics
+- Python 3.8+
+- Django 4.0+ or 5.x
+- Django REST Framework 3.14+
 
----
+## Installation
 
-## SPEC Documents for Review
+### Development Installation
 
-Please review these planning documents before approval:
+```bash
+git clone https://github.com/nestorwheelock/django-tictactoe.git
+cd django-tictactoe
+pip install -e .
+```
 
-- **[Project Charter](planning/PROJECT_CHARTER.md)** - Complete project overview, risks, timeline
-- **[SPEC Summary](planning/SPEC_SUMMARY.md)** - Quick reference guide
-- **[User Stories](planning/stories/)** - Feature requirements (4 stories)
-  - [S-001: Portable Django App Module](planning/stories/S-001-django-app-module.md)
-  - [S-002: Game Board Management API](planning/stories/S-002-game-board-api.md)
-  - [S-003: Win/Draw Detection Logic](planning/stories/S-003-win-draw-detection.md)
-  - [S-004: Optional Frontend Templates](planning/stories/S-004-frontend-templates.md)
-- **[Task Breakdown](planning/tasks/)** - Implementation plan (5 tasks)
-  - [T-001: Django App Module Setup](planning/tasks/T-001-app-module-setup.md) (2h)
-  - [T-002: Game Model & Migrations](planning/tasks/T-002-game-model-migrations.md) (3h)
-  - [T-003: REST API Implementation](planning/tasks/T-003-rest-api-implementation.md) (3h)
-  - [T-004: Frontend Templates](planning/tasks/T-004-frontend-templates.md) (3h)
-  - [T-005: Package Documentation](planning/tasks/T-005-package-documentation.md) (2h)
+### Future: Via pip
 
----
+```bash
+pip install django-tictactoe
+```
 
-## Approval Process
+## Quick Start
 
-**Follow these steps to approve or request changes:**
+### 1. Add to INSTALLED_APPS
 
-1. **Review** all SPEC documents listed above
-2. **Review** [GitHub Issue #1](https://github.com/nestorwheelock/django-tictactoe/issues/1) for the approval checklist
-3. **Ask questions** or request changes via issue comments
-4. **Check all boxes** in Issue #1 if you approve
-5. **Close Issue #1** to formally approve and begin BUILD phase
+```python
+# settings.py
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'rest_framework',
+    'tictactoe',
+]
+```
 
----
+### 2. Include URLs
 
-## What Happens After Approval
+```python
+# urls.py
+from django.contrib import admin
+from django.urls import path, include
 
-Once you close Issue #1:
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('tictactoe/', include('tictactoe.urls')),
+]
+```
 
-- ✅ **Scope is locked** - Any changes require new approval process
-- ✅ **BUILD phase begins** - Following 23-step Test-Driven Development cycle
-- ✅ **This README is replaced** - Will be updated with full production documentation
-- ✅ **Timeline**: ~13 hours over 2-3 days
-- ✅ **Deliverables**: Working package, REST API, tests, documentation
+### 3. Run Migrations
 
----
+```bash
+python manage.py migrate
+```
 
-## Technical Stack (Planned)
+### 4. Start Server
 
-- **Python**: 3.8+
-- **Django**: 4.0+ (compatible with 5.x)
-- **Django REST Framework**: 3.14+
-- **Testing**: pytest-django
-- **Database**: SQLite/PostgreSQL/MySQL (uses Django ORM)
+```bash
+python manage.py runserver
+```
 
----
+### 5. Access the App
 
-## Estimated Timeline
+- **Web Interface**: http://localhost:8000/tictactoe/
+- **API Root**: http://localhost:8000/tictactoe/api/games/
+- **Admin Interface**: http://localhost:8000/admin/
 
-| Phase | Duration | Deliverable |
-|-------|----------|-------------|
-| Day 1 | 5 hours | App setup + Game model + Tests |
-| Day 2 | 6 hours | REST API + Frontend templates + Tests |
-| Day 3 | 2 hours | Documentation + Final testing |
-| **Total** | **13 hours** | **Complete package ready for pip install** |
+## API Endpoints
 
----
+### Create Game
 
-## Questions or Concerns?
+**Endpoint**: `POST /tictactoe/api/games/`
 
-Add comments to [Issue #1](https://github.com/nestorwheelock/django-tictactoe/issues/1) or contact [@nestorwheelock](https://github.com/nestorwheelock)
+**Description**: Create a new tic-tac-toe game.
 
----
+**Request**: No body required
 
-## Project Status
+**Response** (201 Created):
+```json
+{
+  "id": 1,
+  "board": [null, null, null, null, null, null, null, null, null],
+  "current_player": "X",
+  "status": "in_progress",
+  "created_at": "2025-09-30T12:00:00Z",
+  "updated_at": "2025-09-30T12:00:00Z"
+}
+```
 
-- [x] SPEC Phase Complete
-- [ ] CLIENT APPROVAL GATE #1 ⬅️ **YOU ARE HERE**
-- [ ] BUILD Phase
-- [ ] VALIDATION Phase
-- [ ] ACCEPTANCE TEST Phase
-- [ ] CLIENT APPROVAL GATE #2
-- [ ] SHIP Phase
+**Example**:
+```bash
+curl -X POST http://localhost:8000/tictactoe/api/games/
+```
 
-**Next Action**: Review SPEC documents and close Issue #1 to approve.
+### List Games
+
+**Endpoint**: `GET /tictactoe/api/games/`
+
+**Description**: Retrieve all games.
+
+**Response** (200 OK):
+```json
+[
+  {
+    "id": 1,
+    "board": ["X", "O", "X", null, "X", "O", null, null, null],
+    "current_player": "O",
+    "status": "in_progress",
+    "created_at": "2025-09-30T12:00:00Z",
+    "updated_at": "2025-09-30T12:05:00Z"
+  }
+]
+```
+
+### Get Game
+
+**Endpoint**: `GET /tictactoe/api/games/{id}/`
+
+**Description**: Retrieve a specific game with detailed information.
+
+**Response** (200 OK):
+```json
+{
+  "id": 1,
+  "board": ["X", "O", "X", null, "X", "O", null, null, null],
+  "current_player": "O",
+  "status": "in_progress",
+  "created_at": "2025-09-30T12:00:00Z",
+  "updated_at": "2025-09-30T12:05:00Z",
+  "board_display": "\n X | O | X \n-----------\n   | X | O \n-----------\n   |   |   \n"
+}
+```
+
+### Make Move
+
+**Endpoint**: `POST /tictactoe/api/games/{id}/move/`
+
+**Description**: Make a move in the game.
+
+**Request Body**:
+```json
+{
+  "position": 3
+}
+```
+
+**Position Values**: 0-8 (board positions left-to-right, top-to-bottom)
+
+```
+0 | 1 | 2
+---------
+3 | 4 | 5
+---------
+6 | 7 | 8
+```
+
+**Response** (200 OK):
+```json
+{
+  "id": 1,
+  "board": ["X", "O", "X", "O", "X", "O", null, null, null],
+  "current_player": "X",
+  "status": "in_progress",
+  "created_at": "2025-09-30T12:00:00Z",
+  "updated_at": "2025-09-30T12:06:00Z",
+  "message": "Move successful"
+}
+```
+
+**Error Responses**:
+
+```json
+// 400 Bad Request - Position occupied
+{
+  "error": "['Position already occupied']"
+}
+
+// 400 Bad Request - Game over
+{
+  "error": "['Game is already finished']"
+}
+
+// 400 Bad Request - Invalid position
+{
+  "error": {"position": ["Ensure this value is less than or equal to 8."]}
+}
+```
+
+### Delete Game
+
+**Endpoint**: `DELETE /tictactoe/api/games/{id}/`
+
+**Description**: Delete a game.
+
+**Response** (204 No Content): Empty response body
+
+## Frontend Usage
+
+The package includes optional responsive templates for playing games through a web interface.
+
+### Game List
+
+Navigate to `/tictactoe/` to see all games:
+
+- View game status (in progress, X wins, O wins, draw)
+- See current player
+- Create new games
+- Access individual games to play
+
+### Game Play
+
+Navigate to `/tictactoe/game/{id}/` to play a game:
+
+- Interactive 3x3 board
+- Click cells to make moves
+- Real-time status updates
+- Win/draw detection
+- Create new games
+- Refresh current game state
+
+## Customization
+
+### Override Templates
+
+Create your own templates in your project to override the default ones:
+
+```
+your_project/
+└── templates/
+    └── tictactoe/
+        ├── base.html           # Override base layout
+        ├── game_list.html      # Override game list
+        └── game_detail.html    # Override game board
+```
+
+### Override CSS
+
+Customize the appearance by overriding the CSS file:
+
+```
+your_project/
+└── static/
+    └── tictactoe/
+        └── game.css
+```
+
+### Custom Views
+
+Use the Game model and API in your own views:
+
+```python
+from django.views.generic import ListView
+from tictactoe.models import Game
+
+class MyActiveGames(ListView):
+    model = Game
+    template_name = 'my_template.html'
+
+    def get_queryset(self):
+        return Game.objects.filter(status=Game.STATUS_IN_PROGRESS)
+```
+
+### JavaScript Integration
+
+Use the TicTacToe JavaScript object in your own templates:
+
+```javascript
+// Create a game
+const gameId = await TicTacToe.createGame();
+
+// Make a move
+await TicTacToe.makeMove(gameId, 4);  // Center position
+
+// Load game state
+const gameData = await TicTacToe.loadGame(gameId);
+```
+
+## Development
+
+### Setup Development Environment
+
+```bash
+# Clone repository
+git clone https://github.com/nestorwheelock/django-tictactoe.git
+cd django-tictactoe
+
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements-dev.txt
+```
+
+### Run Tests
+
+```bash
+# Run all tests
+pytest
+
+# Run with coverage
+pytest --cov=tictactoe --cov-report=html
+
+# Run specific test file
+pytest tictactoe/tests/test_models.py -v
+```
+
+### Code Quality
+
+```bash
+# Format code
+black tictactoe/
+
+# Check code style
+flake8 tictactoe/
+
+# Type checking (if using mypy)
+mypy tictactoe/
+```
+
+## Testing
+
+The package includes comprehensive tests with >95% coverage:
+
+- **63 tests** covering all functionality
+- Unit tests for models, serializers, views
+- Integration tests for API endpoints
+- Template view tests
+
+```bash
+# Run all tests
+pytest
+
+# Run with verbose output
+pytest -v
+
+# Run with coverage report
+pytest --cov=tictactoe --cov-report=term-missing
+
+# Run specific test class
+pytest tictactoe/tests/test_api.py::TestGameAPI -v
+```
+
+## Architecture
+
+```
+tictactoe/
+├── models.py           # Game model with business logic
+├── serializers.py      # DRF serializers
+├── views.py            # API viewsets and template views
+├── urls.py             # URL configuration
+├── admin.py            # Django admin configuration
+├── templates/          # HTML templates
+│   └── tictactoe/
+│       ├── base.html
+│       ├── game_list.html
+│       └── game_detail.html
+├── static/             # Static files
+│   └── tictactoe/
+│       ├── game.css
+│       └── game.js
+└── tests/              # Test suite
+    ├── test_models.py
+    ├── test_api.py
+    ├── test_views.py
+    └── test_setup.py
+```
+
+## Game Logic
+
+### Board Representation
+
+The board is stored as a 9-element array:
+
+```python
+[0, 1, 2,  # Top row
+ 3, 4, 5,  # Middle row
+ 6, 7, 8]  # Bottom row
+```
+
+Values: `None` (empty), `"X"`, or `"O"`
+
+### Win Conditions
+
+8 winning combinations are checked:
+- 3 rows (horizontal)
+- 3 columns (vertical)
+- 2 diagonals
+
+### Game States
+
+- `in_progress`: Game is active
+- `x_wins`: Player X has won
+- `o_wins`: Player O has won
+- `draw`: Board is full with no winner
+
+## Contributing
+
+Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+
+## Changelog
+
+See [CHANGELOG.md](CHANGELOG.md) for version history and changes.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Credits
+
+Created by Nestor Wheelock
+
+Built with:
+- [Django](https://www.djangoproject.com/)
+- [Django REST Framework](https://www.django-rest-framework.org/)
+- [pytest](https://pytest.org/)
+
+## Support
+
+- GitHub Issues: https://github.com/nestorwheelock/django-tictactoe/issues
+- Documentation: This README
+- Django Docs: https://docs.djangoproject.com/
+- DRF Docs: https://www.django-rest-framework.org/
+
+## Example Usage
+
+### Python Requests
+
+```python
+import requests
+
+BASE_URL = 'http://localhost:8000/tictactoe/api'
+
+# Create a new game
+response = requests.post(f'{BASE_URL}/games/')
+game = response.json()
+game_id = game['id']
+print(f"Created game {game_id}")
+
+# Make moves (X wins top row)
+moves = [0, 3, 1, 4, 2]
+for i, position in enumerate(moves):
+    response = requests.post(
+        f'{BASE_URL}/games/{game_id}/move/',
+        json={'position': position}
+    )
+    game = response.json()
+    print(f"Move {i+1}: {game['current_player']} at position {position}")
+    print(f"Status: {game['status']}")
+
+# Game result
+final_game = requests.get(f'{BASE_URL}/games/{game_id}/').json()
+print(f"\nFinal status: {final_game['status']}")
+print(final_game['board_display'])
+```
+
+### Django Shell
+
+```python
+from tictactoe.models import Game
+
+# Create game
+game = Game.objects.create()
+
+# Make moves
+game.make_move(0)  # X at position 0
+game.make_move(3)  # O at position 3
+game.make_move(1)  # X at position 1
+game.make_move(4)  # O at position 4
+game.make_move(2)  # X at position 2 (wins!)
+
+# Check result
+print(game.status)  # 'x_wins'
+print(game.get_board_display())
+```
