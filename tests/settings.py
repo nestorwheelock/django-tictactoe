@@ -21,7 +21,7 @@ DATABASES = {
     }
 }
 
-ROOT_URLCONF = 'tictactoe.urls'
+ROOT_URLCONF = 'tests.urls'
 
 USE_TZ = True
 
