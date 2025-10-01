@@ -4,7 +4,7 @@
 **Priority**: High
 **Estimate**: 0.5 days
 **Sprint**: Sprint 1
-**Status**: 📋 PENDING
+**Status**: ✅ COMPLETED (2025-09-30)
 
 ---
 
@@ -18,21 +18,21 @@
 
 ## Acceptance Criteria
 
-- [ ] When a player gets 3 in a row horizontally, they win
-- [ ] When a player gets 3 in a column vertically, they win
-- [ ] When a player gets 3 diagonally, they win
-- [ ] When all 9 squares are filled with no winner, the game is a draw
-- [ ] When the game ends, the status is automatically updated
-- [ ] When the game ends, no more moves are allowed
+- [x] When a player gets 3 in a row horizontally, they win
+- [x] When a player gets 3 in a column vertically, they win
+- [x] When a player gets 3 diagonally, they win
+- [x] When all 9 squares are filled with no winner, the game is a draw
+- [x] When the game ends, the status is automatically updated
+- [x] When the game ends, no more moves are allowed
 
 ---
 
 ## Definition of Done
 
-- [ ] `check_winner()` method on Game model
-- [ ] `is_draw()` method on Game model
-- [ ] Status automatically updated after each move
-- [ ] Tests for all 8 winning combinations:
+- [x] `check_winner()` method on Game model
+- [x] `is_draw()` method on Game model
+- [x] Status automatically updated after each move
+- [x] Tests for all 8 winning combinations:
   - Row 0 (positions 0, 1, 2)
   - Row 1 (positions 3, 4, 5)
   - Row 2 (positions 6, 7, 8)
@@ -41,9 +41,9 @@
   - Column 2 (positions 2, 5, 8)
   - Diagonal \ (positions 0, 4, 8)
   - Diagonal / (positions 2, 4, 6)
-- [ ] Tests for draw scenarios
-- [ ] Tests for game-in-progress scenarios
-- [ ] Test coverage >95%
+- [x] Tests for draw scenarios
+- [x] Tests for game-in-progress scenarios
+- [x] Test coverage >95%
 
 ---
 

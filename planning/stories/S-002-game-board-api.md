@@ -4,7 +4,7 @@
 **Priority**: High
 **Estimate**: 1 day
 **Sprint**: Sprint 1
-**Status**: 📋 PENDING
+**Status**: ✅ COMPLETED (2025-09-30)
 
 ---
 
@@ -18,33 +18,33 @@
 
 ## Acceptance Criteria
 
-- [ ] When I POST to `/api/games/`, a new game is created and I receive a game ID
-- [ ] When I GET `/api/games/{id}/`, I see the current board state and game status
-- [ ] When I POST to `/api/games/{id}/move/` with valid position, the board updates
-- [ ] When I POST an invalid move (occupied square), I receive a 400 error with clear message
-- [ ] When I POST a move out of turn, I receive a 400 error
-- [ ] When I POST a move after game is over, I receive a 400 error
-- [ ] API responses follow REST conventions and include proper HTTP status codes
+- [x] When I POST to `/api/games/`, a new game is created and I receive a game ID
+- [x] When I GET `/api/games/{id}/`, I see the current board state and game status
+- [x] When I POST to `/api/games/{id}/move/` with valid position, the board updates
+- [x] When I POST an invalid move (occupied square), I receive a 400 error with clear message
+- [x] When I POST a move out of turn, I receive a 400 error
+- [x] When I POST a move after game is over, I receive a 400 error
+- [x] API responses follow REST conventions and include proper HTTP status codes
 
 ---
 
 ## Definition of Done
 
-- [ ] Game model created with fields:
+- [x] Game model created with fields:
   - `board`: JSONField storing 9-cell array
   - `current_player`: CharField ('X' or 'O')
   - `status`: CharField ('in_progress', 'x_wins', 'o_wins', 'draw')
   - `created_at`, `updated_at`: DateTimeField
-- [ ] GameSerializer with proper field validation
-- [ ] GameViewSet with actions: create, retrieve, list, move
-- [ ] URL routing configured with namespace 'tictactoe'
-- [ ] Comprehensive API tests (>95% coverage):
+- [x] GameSerializer with proper field validation
+- [x] GameViewSet with actions: create, retrieve, list, move
+- [x] URL routing configured with namespace 'tictactoe'
+- [x] Comprehensive API tests (>95% coverage) - 20 API tests, 100% coverage:
   - Create game
   - Retrieve game
   - Valid moves
   - Invalid moves (occupied, wrong turn, game over)
   - Edge cases
-- [ ] API documentation in README
+- [x] API documentation in README
 
 ---
 
